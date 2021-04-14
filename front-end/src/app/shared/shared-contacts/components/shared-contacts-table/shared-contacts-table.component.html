@@ -1,0 +1,99 @@
+<div class="mat-elevation-z8 table-container">
+  <div class="table-content-container">
+    <table [dataSource]="dataSource" mat-table matSort>
+
+      <!-- first name Column -->
+      <ng-container matColumnDef="firstName">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> First Name</th>
+        <td *matCellDef="let element" mat-cell> {{element.firstName}} </td>
+      </ng-container>
+
+      <!-- last name Column -->
+      <ng-container matColumnDef="lastName">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Last Name</th>
+        <td *matCellDef="let element" mat-cell> {{element.lastName}} </td>
+      </ng-container>
+
+      <!-- company Column -->
+      <ng-container matColumnDef="company">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Company</th>
+        <td *matCellDef="let element" mat-cell> {{element.company}} </td>
+      </ng-container>
+
+      <!-- email Column -->
+      <ng-container matColumnDef="email">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Email</th>
+        <td *matCellDef="let element" mat-cell> {{element.email}} </td>
+      </ng-container>
+
+      <!-- address Column -->
+      <ng-container matColumnDef="address">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Address</th>
+        <td *matCellDef="let element" mat-cell> {{element.address}} </td>
+      </ng-container>
+
+      <!-- city Column -->
+      <ng-container matColumnDef="city">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> City</th>
+        <td *matCellDef="let element" mat-cell> {{element.city}} </td>
+      </ng-container>
+
+      <!-- state Column -->
+      <ng-container matColumnDef="state">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> State</th>
+        <td *matCellDef="let element" mat-cell> {{element.state}} </td>
+      </ng-container>
+
+      <!-- zip Column -->
+      <ng-container matColumnDef="zip">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Zip</th>
+        <td *matCellDef="let element" mat-cell> {{element.zip}} </td>
+      </ng-container>
+
+      <!-- country Column -->
+      <ng-container matColumnDef="country">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Country</th>
+        <td *matCellDef="let element" mat-cell> {{element.country}} </td>
+      </ng-container>
+
+      <!-- title Column -->
+      <ng-container matColumnDef="title">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Title</th>
+        <td *matCellDef="let element" mat-cell> {{element.title}} </td>
+      </ng-container>
+
+      <!-- phone Column -->
+      <ng-container matColumnDef="phone">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Phone</th>
+        <td *matCellDef="let element" mat-cell> {{element.phone}} </td>
+      </ng-container>
+
+      <!-- contactName Column -->
+      <ng-container matColumnDef="contactName">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Contact Name</th>
+        <td *matCellDef="let element" mat-cell> {{element.contactName}} </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header> Actions</th>
+        <td *matCellDef="let element" mat-cell>
+          <button (click)="openDeletingDialog(element)" *ngIf="element.status === 'saved'" aria-label="Delete" color="warn" mat-fab mat-mini-fab>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button (click)="openSavingDialog(element)" *ngIf="element.status === 'deleted'" aria-label="Save" color="primary" mat-fab mat-mini-fab>
+            <mat-icon>save</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+  </div>
+  <div class="table-paginator">
+    <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+<div class="clearfix"></div>
+

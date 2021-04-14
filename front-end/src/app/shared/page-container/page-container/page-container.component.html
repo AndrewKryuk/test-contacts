@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>Test</h1>
+    <span class="menu-spacer"></span>
+    <div class="top-navbar-buttons">
+      <a
+        [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/search'" mat-button
+        routerLinkActive="active"
+      >
+        <mat-icon matListIcon>search</mat-icon>
+        search contacts
+      </a>
+      <a
+        [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/saved'" mat-button
+        routerLinkActive="active"
+      >
+        <mat-icon matListIcon>save</mat-icon>
+        saved contacts
+      </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+
+      <a
+        [routerLink]="'/search'" mat-list-item
+      >
+        <mat-icon matListIcon>search</mat-icon>
+        Search contacts
+      </a>
+      <a
+        [routerLink]="'/saved'" mat-list-item
+      >
+        <mat-icon matListIcon>save</mat-icon>
+        Saved contacts
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
