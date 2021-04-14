@@ -3,7 +3,7 @@ import {IsInt, IsNotEmpty, IsOptional, IsString, Matches} from 'class-validator'
 export class ContactDto {
   @IsOptional()
   @IsInt()
-  id?: number;
+  id: number = null;
 
   @IsString()
   firstName: string;

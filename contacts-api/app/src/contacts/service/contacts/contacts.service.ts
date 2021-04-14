@@ -12,7 +12,7 @@ export class ContactsService {
   }
 
   create$(contact: ContactDto): Observable<ContactDto> {
-    return from(this.contactRepository.save(contact));
+    return from(this.contactRepository.save((({ status, id, ...o }) => o)(contact)));
   }
 
   findAll$(): Observable<ContactDto[]> {
@@ -21,7 +21,7 @@ export class ContactsService {
 
   findOne$(contact: ContactDto): Observable<ContactDto> {
     return from(this.contactRepository.findOne({
-      where: (({ status, ...o }) => o)(contact),
+      where: (({ status, id, ...o }) => o)(contact),
     }));
   }
 

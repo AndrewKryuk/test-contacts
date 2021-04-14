@@ -5,7 +5,7 @@ import {MyEntity} from '../../core/entities/my.entity';
 export class Contact extends MyEntity {
 
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
 
   @Column({ name: 'first_name', nullable: false })
   firstName: string;
