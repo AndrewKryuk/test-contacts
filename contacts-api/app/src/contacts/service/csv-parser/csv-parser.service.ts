@@ -66,8 +66,7 @@ export class CsvParserService {
     return list.filter((contact: ContactDto) =>
       (contact.contactName || '').toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
       (contact.email || '').toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-      (contact.phone || '').replace(/[+\-()\s]*/g, '')
-        .indexOf(query.replace(/[+\-()\s]*/g, '')) !== -1,
+      (contact.company || '').toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
 
@@ -78,7 +77,6 @@ export class CsvParserService {
       ).pipe(
         map((foundContact: ContactDto) => {
         if (!!foundContact) {
-          foundContact.status = 'saved';
           return foundContact;
         }
 

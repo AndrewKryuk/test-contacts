@@ -5,15 +5,18 @@ import {
   Get,
   Param,
   Post,
-  Query,
+  Query, UseInterceptors,
 } from '@nestjs/common';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {DeleteResult} from 'typeorm';
 import {QueryDto} from '../../core/dto/query.dto';
+import {TransformInterceptor} from '../../core/interceptors/transform.interceptor';
 import {ContactDto} from '../dto/contact.dto';
 import {ContactsService} from '../service/contacts/contacts.service';
 import {CsvParserService} from '../service/csv-parser/csv-parser.service';
 
 @Controller('contacts')
+@UseInterceptors(TransformInterceptor)
 export class ContactsController {
   constructor(private csvParserService: CsvParserService, private contactService: ContactsService) {
   }
@@ -29,8 +32,8 @@ export class ContactsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    return this.contactService.remove(id);
+  remove(@Param('id') id: number): Observable<DeleteResult> {
+    return this.contactService.remove$(id);
   }
 
   @Get('search')

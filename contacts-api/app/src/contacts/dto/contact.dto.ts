@@ -45,14 +45,4 @@ export class ContactDto {
   contactName: string;
 
   status?: 'deleted' | 'saved' = 'deleted';
-
-  constructor(object?: ContactDto) {
-    if (!!object) {
-      for (const prop in object) {
-        if (object.hasOwnProperty(prop)) {
-          this[prop] = object[prop];
-        }
-      }
-    }
-  }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {from, Observable} from 'rxjs';
-import {Repository} from 'typeorm';
+import {DeleteResult, Repository} from 'typeorm';
 import {ContactDto} from '../../dto/contact.dto';
 import {Contact} from '../../entities/contact.entity';
 
@@ -25,7 +25,7 @@ export class ContactsService {
     }));
   }
 
-  async remove(id: number): Promise<void> {
-    await this.contactRepository.delete(id);
+  remove$(id: number): Observable<DeleteResult> {
+    return from(this.contactRepository.delete(id));
   }
 }
