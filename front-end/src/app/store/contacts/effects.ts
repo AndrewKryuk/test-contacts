@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Store} from '@ngrx/store';
 import {switchMap, map, filter} from 'rxjs/operators';
-import {ContactEntity} from '../../shared/shared-contacts/entities/contact.entity';
 import {ContactsService} from '../../shared/shared-contacts/services/contacts.service';
 import {SubscriptionConfiguratorFeatureState} from '../index';
 import {ContactsActions} from './actions';
@@ -15,14 +14,8 @@ export class ContactsEffects {
     switchMap(() =>
       this.contactsService.getSavedContacts$().pipe(
         filter(data => !!data),
-        map(({ data: contacts }) => {
-            contacts = contacts.map(c => {
-              const entity = new ContactEntity();
-              entity.fromJson(c);
-              return entity;
-            });
-            return ContactsActions.setAll({ contacts });
-          },
+        map(({ data: contacts }) =>
+          ContactsActions.setAll({ contacts: this.contactsService.makeMany(contacts) }),
         ),
       ),
     ),
@@ -33,14 +26,8 @@ export class ContactsEffects {
     switchMap(({ q }) =>
       this.contactsService.getSearchContacts$(q).pipe(
         filter(data => !!data),
-        map(({ data: contacts }) => {
-            contacts = contacts.map(c => {
-              const entity = new ContactEntity();
-              entity.fromJson(c);
-              return entity;
-            });
-            return ContactsActions.setAll({ contacts });
-          },
+        map(({ data: contacts }) =>
+          ContactsActions.setAll({ contacts: this.contactsService.makeMany(contacts) }),
         ),
       ),
     ),
@@ -51,7 +38,8 @@ export class ContactsEffects {
     switchMap(({ contact }) =>
       this.contactsService.deleteContact$(contact).pipe(
         map(() => {
-            contact.status = 'deleted';
+            contact = this.contactsService.makeOne(contact);
+            contact.setDeletedStatus();
             return ContactsActions.setOne({ contact });
           },
         ),
@@ -64,9 +52,8 @@ export class ContactsEffects {
     switchMap(({ contact }) =>
       this.contactsService.saveContact$(contact).pipe(
         map(({ data }) => {
-            data.status = 'saved';
-            const contact = new ContactEntity();
-            contact.fromJson(data);
+            const contact = this.contactsService.makeOne(data);
+            contact.setSavedStatus();
             return ContactsActions.setOne({ contact });
           },
         ),

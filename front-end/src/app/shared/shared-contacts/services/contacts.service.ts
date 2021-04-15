@@ -32,4 +32,18 @@ export class ContactsService {
   saveContact$(contact: ContactEntity): Observable<ApiResponse<ContactEntity>> {
     return this.http.post$(`/contacts/`, {...contact});
   }
+
+  makeMany(contacts: JsonObject<ContactEntity>[]) : ContactEntity[] {
+    return contacts.map(c => {
+      const entity = new ContactEntity();
+      entity.fromJson(c);
+      return entity;
+    });
+  }
+
+  makeOne(contact: JsonObject<ContactEntity>): ContactEntity {
+    const entity = new ContactEntity();
+    entity.fromJson(contact);
+    return entity;
+  }
 }

@@ -1,4 +1,4 @@
-export class ContactEntity {
+export class ContactEntity implements BootableClass {
   id!: number;
   firstName!: string;
   lastName!: string;
@@ -36,5 +36,13 @@ export class ContactEntity {
       id: this.id,
       // other fields
     };
+  }
+
+  setSavedStatus() {
+    this.status = 'saved';
+  }
+
+  setDeletedStatus() {
+    this.status = 'deleted';
   }
 }
