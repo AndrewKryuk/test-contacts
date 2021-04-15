@@ -34,11 +34,7 @@ export class ContactsService {
   }
 
   makeMany(contacts: JsonObject<ContactEntity>[]) : ContactEntity[] {
-    return contacts.map(c => {
-      const entity = new ContactEntity();
-      entity.fromJson(c);
-      return entity;
-    });
+    return contacts.map(c => this.makeOne(c));
   }
 
   makeOne(contact: JsonObject<ContactEntity>): ContactEntity {
